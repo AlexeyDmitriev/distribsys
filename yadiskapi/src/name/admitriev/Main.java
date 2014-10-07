@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 //ls cp mv rm
 public class Main {
 
-	private static String token = "0145de72efd1498580bf9f582cfa14e1";
+	private static String token = "";
 
 	public static void main(String[] args) throws IOException {
 		if(args.length == 0) {
