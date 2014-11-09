@@ -29,9 +29,16 @@ public class CoordinatorImplementation extends UnicastRemoteObject implements Co
 
 		aliveServers.put(serverName, currentTime);
 
-		if(serverName.equals(viewInfo.primary) && view < viewInfo.view) {
+		if(serverName.equals(viewInfo.primary) && view == 0) {
 			resetPrimaryServer();
-			return viewInfo;
+			return viewInfo.copy();
+		}
+
+		//backup restart
+		if(serverName.equals(viewInfo.backup) && view == 0 && masterAcknowledged) {
+			++viewInfo.view;
+			masterAcknowledged = false;
+			return viewInfo.copy();
 		}
 
 
@@ -47,7 +54,7 @@ public class CoordinatorImplementation extends UnicastRemoteObject implements Co
 		if (view == viewInfo.view && serverName.equals(viewInfo.primary))
 			masterAcknowledged = true;
 
-		return viewInfo;
+		return viewInfo.copy();
 	}
 
 	@Override

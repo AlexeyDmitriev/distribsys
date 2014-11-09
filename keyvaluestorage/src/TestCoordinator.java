@@ -141,6 +141,26 @@ public class TestCoordinator
 				service.tick();
 			}
 			test(info, srv3, srv1, currentView, "do not promote backup");
+
+			// primary is OK
+			for (int i = 0; i < longDelay; ++i) {
+				info = service.ping(currentView, srv3);
+				info = service.ping(currentView, srv1);
+				if (info.view == currentView + 1) break;
+				service.tick();
+			}
+			test(info, srv3, srv1, currentView, "no changes, primary alive");
+
+			// backup restarts
+			for (int i = 0; i < longDelay; ++i) {
+				info = service.ping(currentView, srv3);
+				info = service.ping(0, srv1);
+				if (info.view == currentView + 1) break;
+				service.tick();
+			}
+			++currentView;
+			test(info, srv3, srv1, currentView, "backup restarts");
+
 		} catch (TestFailedException e) {
 			System.err.println("Test failed: " + e.getMessage());
 		}
