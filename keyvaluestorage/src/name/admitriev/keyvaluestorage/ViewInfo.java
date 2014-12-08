@@ -1,7 +1,8 @@
 package name.admitriev.keyvaluestorage;
 
-public class ViewInfo
-{
+import java.io.Serializable;
+
+public class ViewInfo implements Serializable {
 	public int view = 0;
 	public String primary = "";
 	public String backup = "";

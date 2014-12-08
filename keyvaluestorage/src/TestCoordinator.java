@@ -1,13 +1,6 @@
-import name.admitriev.keyvaluestorage.CoordinatorImplementation;
+import name.admitriev.keyvaluestorage.Coordinator;
 import name.admitriev.keyvaluestorage.ViewInfo;
 
-class TestFailedException extends Exception
-{
-	TestFailedException(String message)
-	{
-		super(message);
-	}
-}
 
 public class TestCoordinator
 {
@@ -37,8 +30,8 @@ public class TestCoordinator
 
 	public static void main (String[] argv) throws Exception
 	{
-		CoordinatorImplementation service = new CoordinatorImplementation();
-		int longDelay = CoordinatorImplementation.DEAD_PINGS * 2;
+		Coordinator service = new Coordinator();
+		int longDelay = Coordinator.DEAD_PINGS * 2;
 		String srv1 = "localhost:10001";
 		String srv2 = "localhost:10002";
 		String srv3 = "localhost:10003";

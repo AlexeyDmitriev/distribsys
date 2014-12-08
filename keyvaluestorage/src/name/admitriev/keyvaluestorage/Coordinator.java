@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class CoordinatorImplementation extends UnicastRemoteObject implements CoordinatorInterface {
+public class Coordinator extends UnicastRemoteObject implements CoordinatorInterface {
 	private long currentTime = 1;
 
 	public static final int DEAD_PINGS = 3;
@@ -16,7 +16,7 @@ public class CoordinatorImplementation extends UnicastRemoteObject implements Co
 
 	private ViewInfo viewInfo;
 
-	public CoordinatorImplementation() throws RemoteException {
+	public Coordinator() throws RemoteException {
 		viewInfo = new ViewInfo();
 	}
 
@@ -74,6 +74,8 @@ public class CoordinatorImplementation extends UnicastRemoteObject implements Co
 		boolean primaryAlive = aliveServers.containsKey(viewInfo.primary);
 		boolean backupAlive = aliveServers.containsKey(viewInfo.backup);
 		if(!primaryAlive && !backupAlive) {
+			if(viewInfo.view == 0)
+				return; // fine, we didn't see any server yet
 			throw new RuntimeException("We are dead");
 		}
 		if(!primaryAlive)
